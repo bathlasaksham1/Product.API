@@ -28,10 +28,18 @@ namespace Product.API.Controllers
             return Ok(products);
         }
 
-        [HttpGet("{id}")]
+        //Search Product By Id
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetProductById([FromRoute] int id)
         {
             var product = await _productRepository.GetProductByIdAsync(id);
+            return Ok(product);
+        }
+        //Search Product By Name
+        [HttpGet("{name}")]
+        public async Task<IActionResult> GetProductByName([FromRoute] string name)
+        {
+            var product = await _productRepository.GetProductByNameAsync(name);
             return Ok(product);
         }
 

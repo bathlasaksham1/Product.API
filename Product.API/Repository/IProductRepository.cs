@@ -8,5 +8,6 @@ namespace Product.API.Repository
     {
         Task<List<ProductModel>> GetAllProductsAsync();
         Task<ProductModel> GetProductByIdAsync(int ProductId);
+        Task<ProductModel> GetProductByNameAsync(string ProductName);
     }
 }

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Product.API.Data;
+using Product.API.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,8 +34,8 @@ namespace Product.API
                (options => options.UseSqlServer(Configuration.GetConnectionString("ProductsDb")));
 
             services.AddControllers();
-            
-          
+
+            services.AddScoped<IProductRepository, ProductRepository>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Products.API", Version = "v1" });
