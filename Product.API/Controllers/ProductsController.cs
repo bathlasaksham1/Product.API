@@ -42,6 +42,15 @@ namespace Product.API.Controllers
             var product = await _productRepository.GetProductByNameAsync(name);
             return Ok(product);
         }
+        //ADD any new Product in Database (Post method)
+        [HttpPost("")]
+        public async Task<IActionResult> AddNewProduct([FromBody] ProductModel productModel)
+        {
+            var id = await _productRepository.AddProductAsync(productModel);
+            //We are adding a new prroduct , so we need 201 request and we use CreatedAtAction method
+            return CreatedAtAction(nameof(GetProductById), new { id = id, controller = "Products" }, productModel);
+        }
+       
 
     }
 }

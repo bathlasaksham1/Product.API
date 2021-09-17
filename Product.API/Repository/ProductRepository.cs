@@ -71,6 +71,26 @@ namespace Product.API.Repository
             return records;
 
         }
+        //Add new Data in Database
+        public async Task<int> AddProductAsync(ProductModel productModel)
+        {
+            //Concert ProductModel to Products which is present in Data Folder
+            var product = new Products()
+            {
+                // Id = productModel.Id, No need to set Primary Key 
+                Price = productModel.Price,
+                Name = productModel.Name,
+                Description = productModel.Description,
+                Image_Name = productModel.Image_Name,
+                Rating = productModel.Rating,
+                No_Of_Units = productModel.No_Of_Units
+
+            };
+
+            _context.Products.Add(product);
+            await _context.SaveChangesAsync();
+            return product.Id;
+        }
 
 
 
