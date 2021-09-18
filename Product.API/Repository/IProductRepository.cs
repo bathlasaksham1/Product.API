@@ -6,10 +6,10 @@ namespace Product.API.Repository
 {
     public interface IProductRepository
     {
-        Task<List<ProductModel>> GetAllProductsAsync();
-        Task<ProductModel> GetProductByIdAsync(int ProductId);
-        Task<ProductModel> GetProductByNameAsync(string ProductName);
-        Task<int> AddProductAsync(ProductModel productModel);
-        Task<List<ProductModel>> GetAllCategoriesAsync(string CategoryName);
+       
+        Task<ProductModel> searchProductByIdAsync(int ProductId);
+        Task<ProductModel> searchProductByNameAsync(string ProductName);
+        Task<int> addProductRatingAsync(int ProductId, int Rating);
+       
     }
 }

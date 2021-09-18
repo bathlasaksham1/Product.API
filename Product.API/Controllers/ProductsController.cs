@@ -11,7 +11,7 @@ namespace Product.API.Controllers
 {
    [Route("api/[controller]")]
     [ApiController]
-    //[BindProperties(SupportsGet =true)]
+    
     public class ProductsController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
@@ -21,44 +21,34 @@ namespace Product.API.Controllers
         {
             _productRepository = productRepository;
         }
-        //Retrieve all Products From IProductRepository
-        //Retrieve all Products From IProductRepository
-        [HttpGet("")]
-        public async Task<IActionResult> GetAllProducts()
-        {
-            var products = await _productRepository.GetAllProductsAsync();
-            return Ok(products);
-        }
 
-        //Search Product By Id
+        //Search Product By Id (GET/searchProductbyId(Input:ProductId|Output:Product object)
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetProductById([FromRoute] int id)
+        public async Task<IActionResult> searchProductById([FromRoute] int id)
         {
-            var product = await _productRepository.GetProductByIdAsync(id);
+            var product = await _productRepository.searchProductByIdAsync(id);
             return Ok(product);
         }
-        //Search Product By Name
+        //Search Product By Name (GET/searchProductbyName(Input:ProductName|Output:Product object))
         [HttpGet("GetProductByName/{name}")]
-        public async Task<IActionResult> GetProductByName([FromRoute] string name)
+        public async Task<IActionResult> searchProductByName([FromRoute] string name)
         {
-            var product = await _productRepository.GetProductByNameAsync(name);
+            var product = await _productRepository.searchProductByNameAsync(name);
             return Ok(product);
         }
-        //ADD any new Product in Database (Post method)
-        [HttpPost("")]
-        public async Task<IActionResult> AddNewProduct([FromBody] ProductModel productModel)
+        //POST/addProductRating(product ID,rating| Output:Sataus)
+        [HttpPost("addRating")]
+        public async Task<IActionResult> addProductRating(int ProductId, int rating)
         {
-            var id = await _productRepository.AddProductAsync(productModel);
-            //We are adding a new prroduct , so we need 201 request and we use CreatedAtAction method
-            return CreatedAtAction(nameof(GetProductById), new { id = id, controller = "Products" }, productModel);
+            var id = await _productRepository.addProductRatingAsync(ProductId,rating);
+            if(id!=0 )
+            {
+                return Ok("Success");
+            }
+          
+            return NotFound("Service not available");
         }
-        //search by Category
-        [HttpGet("{CategoryName}")]
-        public async Task<IActionResult> GetAllCategory([FromRoute] string CategoryName )
-        {
-            var products = await _productRepository.GetAllCategoriesAsync(CategoryName);
-            return Ok(products);
-        }
+       
 
 
 
