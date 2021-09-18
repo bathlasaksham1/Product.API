@@ -30,8 +30,9 @@ namespace Product.API.Repository
                 Description=x.Description,
                 Image_Name=x.Image_Name,
                 Rating=x.Rating,
-                No_Of_Units=x.No_Of_Units
-  
+                No_Of_Units=x.No_Of_Units,
+                Category = x.Category
+
             }).ToListAsync();
             return records;
 
@@ -47,7 +48,8 @@ namespace Product.API.Repository
                 Description = x.Description,
                 Image_Name = x.Image_Name,
                 Rating = x.Rating,
-                No_Of_Units = x.No_Of_Units
+                No_Of_Units = x.No_Of_Units,
+                Category = x.Category
 
             }).FirstOrDefaultAsync();
             return records;
@@ -65,7 +67,8 @@ namespace Product.API.Repository
                 Description = x.Description,
                 Image_Name = x.Image_Name,
                 Rating = x.Rating,
-                No_Of_Units = x.No_Of_Units
+                No_Of_Units = x.No_Of_Units,
+                Category = x.Category
 
             }).FirstOrDefaultAsync();
             return records;
@@ -83,13 +86,33 @@ namespace Product.API.Repository
                 Description = productModel.Description,
                 Image_Name = productModel.Image_Name,
                 Rating = productModel.Rating,
-                No_Of_Units = productModel.No_Of_Units
+                No_Of_Units = productModel.No_Of_Units,
+                Category = productModel.Category
 
             };
 
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
             return product.Id;
+        }
+        //Get all Categories
+        public async Task<List<ProductModel>> GetAllCategoriesAsync(string CategoryName)
+        {
+            //Convert ProductModel Data to Products(Manuualy) Best approach is to use AutoMapper
+            var records = await _context.Products.Where(x => x.Category == CategoryName).Select(x => new ProductModel
+            {
+                Id = x.Id,
+                Price = x.Price,
+                Name = x.Name,
+                Description = x.Description,
+                Image_Name = x.Image_Name,
+                Rating = x.Rating,
+                No_Of_Units = x.No_Of_Units,
+                Category=x.Category
+
+            }).ToListAsync();
+            return records;
+
         }
 
 

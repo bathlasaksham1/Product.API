@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 
 namespace Product.API.Controllers
 {
-    [Route("api/[controller]")]
+   [Route("api/[controller]")]
     [ApiController]
+    //[BindProperties(SupportsGet =true)]
     public class ProductsController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
@@ -21,10 +22,11 @@ namespace Product.API.Controllers
             _productRepository = productRepository;
         }
         //Retrieve all Products From IProductRepository
+        //Retrieve all Products From IProductRepository
         [HttpGet("")]
         public async Task<IActionResult> GetAllProducts()
         {
-            var products =await _productRepository.GetAllProductsAsync();
+            var products = await _productRepository.GetAllProductsAsync();
             return Ok(products);
         }
 
@@ -36,7 +38,7 @@ namespace Product.API.Controllers
             return Ok(product);
         }
         //Search Product By Name
-        [HttpGet("{name}")]
+        [HttpGet("GetProductByName/{name}")]
         public async Task<IActionResult> GetProductByName([FromRoute] string name)
         {
             var product = await _productRepository.GetProductByNameAsync(name);
@@ -50,7 +52,15 @@ namespace Product.API.Controllers
             //We are adding a new prroduct , so we need 201 request and we use CreatedAtAction method
             return CreatedAtAction(nameof(GetProductById), new { id = id, controller = "Products" }, productModel);
         }
-       
+        //search by Category
+        [HttpGet("{CategoryName}")]
+        public async Task<IActionResult> GetAllCategory([FromRoute] string CategoryName )
+        {
+            var products = await _productRepository.GetAllCategoriesAsync(CategoryName);
+            return Ok(products);
+        }
+
+
 
     }
 }

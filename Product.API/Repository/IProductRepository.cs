@@ -10,5 +10,6 @@ namespace Product.API.Repository
         Task<ProductModel> GetProductByIdAsync(int ProductId);
         Task<ProductModel> GetProductByNameAsync(string ProductName);
         Task<int> AddProductAsync(ProductModel productModel);
+        Task<List<ProductModel>> GetAllCategoriesAsync(string CategoryName);
     }
 }

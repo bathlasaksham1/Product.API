@@ -20,5 +20,6 @@ namespace Product.API.Data
         public int Rating { get; set; }
        
         public int No_Of_Units { get; set; }
+        public string Category { get; set; }
     }
 }
